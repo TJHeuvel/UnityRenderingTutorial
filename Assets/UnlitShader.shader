@@ -11,9 +11,7 @@ Shader "Unlit/UnlitShader"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-        
-            #include "UnityCG.cginc"
-
+            
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -32,10 +30,10 @@ Shader "Unlit/UnlitShader"
             v2f vert (appdata v)
             {
                 v2f o;
+                o.uv = (v.uv * _MainTex_ST.xy) + _MainTex_ST.zw;
                 
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-
+                //TODO: Fill out o.vertex!
+                
                 return o;
             }
 
