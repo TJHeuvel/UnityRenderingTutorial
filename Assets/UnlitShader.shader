@@ -28,7 +28,8 @@ Shader "Unlit/UnlitShader"
             float4 _MainTex_ST;
             
             float4x4 custom_ObjectToWorld,
-                    custom_ViewMatrix;
+                    custom_ViewMatrix,
+                    custom_ProjectionMatrix;
 
             v2f vert (appdata v)
             {
@@ -37,6 +38,9 @@ Shader "Unlit/UnlitShader"
                 
                 float4 worldPos = mul(custom_ObjectToWorld, v.vertex);
                 float4 viewPos = mul(custom_ViewMatrix, worldPos);
+                float4 clipPos = mul(custom_ProjectionMatrix, viewPos);
+
+                o.vertex = clipPos;
 
                 return o;
             }
