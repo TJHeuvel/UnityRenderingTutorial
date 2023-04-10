@@ -27,13 +27,16 @@ Shader "Unlit/UnlitShader"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             
+            float4x4 custom_ObjectToWorld,
+                    custom_ViewMatrix;
+
             v2f vert (appdata v)
             {
                 v2f o;
                 o.uv = (v.uv * _MainTex_ST.xy) + _MainTex_ST.zw;
                 
-                //TODO: Fill out o.vertex!
-                
+                float4 worldPos = mul(custom_ObjectToWorld, v.vertex);
+
                 return o;
             }
 
