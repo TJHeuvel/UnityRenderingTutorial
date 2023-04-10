@@ -11,7 +11,9 @@ Shader "Unlit/UnlitShader"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-        
+            
+            #pragma enable_d3d11_debug_symbols
+
             #include "UnityCG.cginc"
 
             struct appdata
