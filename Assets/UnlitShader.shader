@@ -2,7 +2,7 @@ Shader "Unlit/UnlitShader"
 {
     Properties
     {
-        [NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
+        _MainTex ("Texture", 2D) = "white" {}
     }
     SubShader
     {
@@ -11,9 +11,7 @@ Shader "Unlit/UnlitShader"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            
-            #pragma enable_d3d11_debug_symbols
-
+        
             #include "UnityCG.cginc"
 
             struct appdata
@@ -29,13 +27,14 @@ Shader "Unlit/UnlitShader"
             };
 
             sampler2D _MainTex;
+            float4 _MainTex_ST;
             
             v2f vert (appdata v)
             {
                 v2f o;
                 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
                 return o;
             }
