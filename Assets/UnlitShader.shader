@@ -36,6 +36,7 @@ Shader "Unlit/UnlitShader"
                 o.uv = (v.uv * _MainTex_ST.xy) + _MainTex_ST.zw;
                 
                 float4 worldPos = mul(custom_ObjectToWorld, v.vertex);
+                float4 viewPos = mul(custom_ViewMatrix, worldPos);
 
                 return o;
             }
