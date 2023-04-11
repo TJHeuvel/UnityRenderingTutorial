@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 class RenderSystem : MonoBehaviour
 {
@@ -26,18 +28,23 @@ class RenderSystem : MonoBehaviour
             });
             meshRenderer.forceRenderingOff = true;//We'll do our own!
         }
+
+        RenderPipelineManager.beginCameraRendering += onPreRender;
     }
+
     void OnDisable()
     {
-
         foreach (var meshRenderer in FindObjectsOfType<MeshRenderer>())
             meshRenderer.forceRenderingOff = false;
+
+        
+        RenderPipelineManager.beginCameraRendering -= onPreRender;
     }
 
-    void LateUpdate()
+    private void onPreRender(ScriptableRenderContext arg1, Camera cam)
     {
-        Shader.SetGlobalMatrix("custom_ViewMatrix", Camera.main.worldToCameraMatrix);
-        Shader.SetGlobalMatrix("custom_ProjectionMatrix", GL.GetGPUProjectionMatrix(Camera.main.projectionMatrix, true));
+        Shader.SetGlobalMatrix("custom_ViewMatrix", cam.worldToCameraMatrix);
+        Shader.SetGlobalMatrix("custom_ProjectionMatrix", GL.GetGPUProjectionMatrix(cam.projectionMatrix, true));
 
         foreach (var draw in drawCalls)
         {
