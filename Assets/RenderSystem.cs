@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[ExecuteAlways]
 class RenderSystem : MonoBehaviour
 {
     struct DrawCall
